@@ -3,7 +3,7 @@ import random
 class Bank:
     
     def __init__(self):
-        accounts = {}
+        self.accounts = {}
 
     def creataccount(self, name, initial_deposit):
         account_number = self.account_number_generator()
@@ -12,8 +12,8 @@ class Bank:
 
 
     def account_number_generator(self):
-        self.account_number = str(random.randint(1,99999)).zfill(5)
-        return account_number
+        return str(random.randint(1,99999)).zfill(5)
+        
 
     def check_valid_user(self, name, account_number):
         #for name, account_numbers in account.items() :
@@ -46,7 +46,7 @@ while True:
     if choice == "1":
         name = input("Enter your name: ")
         initial_deposit = float(input("Enter your initial deposit amount: "))
-        bank.creataccount()
+        bank.creataccount(name, initial_deposit)
 
     elif choice == "2":
         print("Enter you name: ", input(""))

@@ -1,3 +1,10 @@
+#self.accounts = {
+#    "account_number_1": {"Name": "John Doe", "balance": 1000.0},
+#    "account_number_2": {"Name": "Jane Smith", "balance": 500.0},
+    # ... other accounts ...
+# }
+
+
 import random
 
 class Bank:
@@ -16,9 +23,10 @@ class Bank:
         
 
     def check_valid_user(self, name, account_number):
-        #for name, account_numbers in account.items() :
-            #for account_number in account_numbers:
-        pass
+        if account_number in self.accounts and self.accounts[account_number]['name'] == name:
+            return True
+        else:
+            return False
 
         
     def withdraw(self, initial_deposit):
@@ -49,9 +57,9 @@ while True:
         bank.creataccount(name, initial_deposit)
 
     elif choice == "2":
-        print("Enter you name: ", input(""))
-        print("Enter your deposit amount: ", input())
-        bank.check_valid_user()
+        name = input("Enter you name: ")
+        account_number = input("Enter your account number: ")
+        bank.check_valid_user(name, account_number)
 
         while True:
             print("1: Withdraw: ")

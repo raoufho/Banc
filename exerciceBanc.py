@@ -6,13 +6,14 @@ class Bank:
         accounts = {}
 
     def creataccount(self, name, initial_deposit):
-        print("Enter your name: ")
-        name = input(name)
-        print("Enter your initial deposit: ")
-        initial_deposit = input(int(initial_deposit))
+        account_number = self.account_number_generator()
+        self.accounts[account_number] = {"name": name, "balance": initial_deposit}
+        print("your account number is: ", bank.account_number_generator())
+
 
     def account_number_generator(self):
-        self.account_number = random.randint(1,99999).zfill(5)
+        self.account_number = str(random.randint(1,99999)).zfill(5)
+        return account_number
 
     def check_valid_user(self, name, account_number):
         #for name, account_numbers in account.items() :
@@ -43,8 +44,9 @@ while True:
     
     choice = input() 
     if choice == "1":
+        name = input("Enter your name: ")
+        initial_deposit = float(input("Enter your initial deposit amount: "))
         bank.creataccount()
-        print("your account number is: ", bank.account_number_generator())
 
     elif choice == "2":
         print("Enter you name: ", input(""))
@@ -59,16 +61,16 @@ while True:
 
             option = input(int())
 
-            if option == 1:
+            if option == "1":
                 bank.withdraw()
 
-            elif option == 2:
+            elif option == "2":
                 bank.deposit()
 
-            elif option == 3:
+            elif option == "3":
                 bank.deposit()
 
-            elif option == 4:
+            elif option == "4":
                 break
 
             else:

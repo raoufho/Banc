@@ -1,4 +1,4 @@
-#self.accounts = {
+# self.accounts = {
 #    "account_number_1": {"Name": "John Doe", "balance": 1000.0},
 #    "account_number_2": {"Name": "Jane Smith", "balance": 500.0},
     # ... other accounts ...
@@ -14,7 +14,10 @@ class Bank:
 
 
     def account_number_generator(self):
-        return str(random.randint(1,99999)).zfill(5)
+        while True:
+            account_number = str(random.randint(1,99999)).zfill(5)
+            if account_number not in self.accounts:
+                return str(random.randint(1,99999)).zfill(5)
 
 
     def creataccount(self, name, initial_deposit):
@@ -89,13 +92,13 @@ while True:
                     break
 
                 else:
-                    print("Invalid option. Please enter a valid option (1, 2, 3, or 4).")
+                    print("Invalid option. Please enter a valid option (1, 2, 3, or 4).\n")
             
         else:
-            print("Please check your name and account number")
+            print("Please check your name and account number\n")
 
     elif choice == "3":
-        print("thank you for using our service")
+        print("thank you for using our service\n")
         exit()
 
     else:

@@ -12,6 +12,7 @@
 #    "account_number_2": {"Name": "Jane Smith", "balance": 500.0},
     # ... other accounts ...
 # }
+# {account_number : account_info} as account_info = {name : balance}
 
 
 import random
@@ -33,19 +34,21 @@ class Bank:
                 return account_number
 
     def creataccount(self, name, initial_deposit):
-        # Check if a user with the same name already exists
-        for account_number, account_info in self.accounts.items():
-            #we define the dict as {account_number : account_info} tq account_info = {name : balance}
-            if account_info['name'] == name:
-                print(f"Error: Account creation failed. A user with the name '{name}' already exists.")
-                return
-        # Create a new account with a random account number
-        account_number = self.account_number_generator()
-        # Store account information in the dictionary
-        self.accounts[account_number] = {"name": name, "balance": initial_deposit}
-        # Display a success message with the account number
-        print(f"Account created successfully. Your account number is: {account_number}")
-
+        # Check if the user name lenght is more than three characters
+        if len(name) > 3 and initial_deposit < 5000 and initial_deposit > 0:
+            # Check if a user with the same name already exists
+            for account_number, account_info in self.accounts.items():
+                if account_info['name'] == name:
+                    print(f"Error: Account creation failed. A user with the name '{name}' already exists.")
+                    return
+            # Create a new account with a random account number
+            account_number = self.account_number_generator()
+            # Store account information in the dictionary
+            self.accounts[account_number] = {"name": name, "balance": initial_deposit}
+            # Display a success message with the account number
+            print(f"Account created successfully. Your account number is: {account_number}")
+        else:
+            print("Error: User name must be more than 3 characters, intial deposit < 5000")
 
     def check_valid_user(self, name, account_number):
     # Check if the provided account number and name match an existing account
@@ -57,22 +60,29 @@ class Bank:
     def withdraw(self, account_number, amount):
         # Convert the withdrawal amount to a float
         amount = float(amount)
-        # Check if there are sufficient funds for the withdrawal
-        if amount > self.accounts[account_number]['balance']:
-            # Display an error message for insufficient funds
-            print("Insufficient funds. Withdrawal failed.")
-        else:
-            # Perform the withdrawal and display the updated balance
-            self.accounts[account_number]['balance'] -= amount
-            print(f"Withdrawal successful. Available balance: {self.accounts[account_number]['balance']}")
-        
+        if amount > 0:
+            # Check if there are sufficient funds for the withdrawal
+            if amount > self.accounts[account_number]['balance']:
+                # Display an error message for insufficient funds
+                print("Insufficient funds. Withdrawal failed.")
+            else:
+                # Perform the withdrawal and display the updated balance
+                self.accounts[account_number]['balance'] -= amount
+                print(f"Withdrawal successful. Available balance: {self.accounts[account_number]['balance']}")
+        else :
+            print("Invalid operation!")
 
     def deposit(self, account_number, amount):
         # Convert the deposit amount to a float
         amount = float(amount)
-        # Perform the deposit and display the updated balance
-        self.accounts[account_number]['balance'] += amount
-        print("Deposit successful. Available balance: "format.({self.accounts[account_number]['balance']}))
+        # Check if the amount is positif and less than 10k
+        if amount < 10000 and amount > 0:
+            # Perform the deposit and display the updated balance
+            self.accounts[account_number]['balance'] += amount
+            print(f"Deposit successful. Available balance: {self.accounts[account_number]['balance']}")
+        else:
+            # Message error for deposit
+            print("Deposit failed. Amount should be less than 10000")
 
     def display(self, account_number):
         # Display the available balance for the specified account

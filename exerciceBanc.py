@@ -21,10 +21,14 @@ class Bank:
 
 
     def creataccount(self, name, initial_deposit):
+        for account_number, account_info in self.accounts.items():
+            if account_info['name'] == name:
+                print(f"Error a user with the name '{name}' already existe")
+                return
         account_number = self.account_number_generator()
-        self.accounts[account_number] = {'name': name, 'balance': initial_deposit}
-        print("your account number is: ", account_number)
-        
+        self.accounts[account_number] = {"name": name, "balance": initial_deposit}
+        print(f"Account created successfully. Your account number is: {account_number}")
+
 
     def check_valid_user(self, name, account_number):
         if account_number in self.accounts and self.accounts[account_number]['name'] == name:
@@ -35,8 +39,11 @@ class Bank:
         
     def withdraw(self, account_number, amount):
         amount = float(amount)
-        self.accounts[account_number]['balance'] -= amount
-        print(f"Available balance: {self.accounts[account_number]['balance']}")
+        if amount > self.accounts[account_number]['balance']:
+            print("You don't have enaught money !")
+        else:
+            self.accounts[account_number]['balance'] -= amount
+            print(f"Available balance: {self.accounts[account_number]['balance']}")
         
 
     def deposit(self, account_number, amount):
@@ -55,7 +62,7 @@ while True:
     print("2 Access to an existing account")
     print("3 Exit")
     
-    choice = input("\nEnter the option number: ") 
+    choice = input("\n Enter the option number: ") 
     if choice == "1":
         name = input("Enter your name: ")
         initial_deposit = float(input("Enter your initial deposit amount: "))

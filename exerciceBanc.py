@@ -50,7 +50,7 @@ class Bank:
                 # Display a success message with the account number
                 print(f"Account created successfully. Your account number is: {account_number}")
             else:
-                print("Error: Initial deposit must be between 10 and 5000.")
+                print("Error: Initial deposit must be between $10 and $5000.")
         else:
             print("Error: User name must be more than 3 characters.")
 
@@ -65,13 +65,14 @@ class Bank:
         # Convert the withdrawal amount to a float
         amount = float(amount)
         # Check if there are sufficient funds for the withdrawal and amount is positive
-        if amount > 0 and amount > self.accounts[account_number]['balance']:
-            # Display an error message for insufficient funds
-            print("Insufficient funds. Withdrawal failed.")
-        else:
+        if 0 < amount < self.accounts[account_number]['balance']:
             # Perform the withdrawal and display the updated balance
             self.accounts[account_number]['balance'] -= amount
-            print(f"Withdrawal successful. Available balance: {self.accounts[account_number]['balance']}")
+            print(f"Withdrawal successful. Available balance: ${self.accounts[account_number]['balance']:.2f}")
+        else:
+            # Display an error message for insufficient funds
+            print("Insufficient funds. Withdrawal failed.")
+
 
     def deposit(self, account_number, amount):
         # Convert the deposit amount to a float
@@ -80,14 +81,14 @@ class Bank:
         if 0 < amount < 10000 :
             # Perform the deposit and display the updated balance
             self.accounts[account_number]['balance'] += amount
-            print(f"Deposit successful. Available balance: {self.accounts[account_number]['balance']}")
+            print(f"Deposit successful. Available balance: ${self.accounts[account_number]['balance']:.2f}")
         else:
             # Message error for deposit
-            print("Deposit failed. Amount should be less than 10000")
+            print("Deposit failed. Amount should be less than $10000")
 
     def display(self, account_number):
         # Display the available balance for the specified account
-        print("Available balance: ", self.accounts[account_number]['balance'])
+        print("Available balance: ${:.2f}".format(self.accounts[account_number]['balance']))
 
 # Initialize the bank object
 bank = Bank()

@@ -62,8 +62,13 @@ class Bank:
             return False    # Return False if the account is not valid
 
     def withdraw(self, account_number, amount):
-        # Convert the withdrawal amount to a float
-        amount = float(amount)
+        try:
+            # Convert the withdrawal amount to a float
+            amount = float(amount)
+        except ValueError:
+            print("Invalid input. Please enter a valid numeric value.")
+        return
+
         # Check if there are sufficient funds for the withdrawal and amount is positive
         if 0 < amount < self.accounts[account_number]['balance']:
             # Perform the withdrawal and display the updated balance
@@ -75,8 +80,13 @@ class Bank:
 
 
     def deposit(self, account_number, amount):
-        # Convert the deposit amount to a float
-        amount = float(amount)
+        try:
+            # Convert the deposit amount to a float
+            amount = float(amount)
+        except ValueError:
+            print("Invalid input. Please enter a valid numeric value.")
+        return
+    
         # Check if the amount is positif and less than 10k
         if 0 < amount < 10000 :
             # Perform the deposit and display the updated balance

@@ -172,7 +172,7 @@ while True:
     elif choice == "3":
         # Option to exit the program
         print("Exiting the program. Thank you for using our service\n")
-        exit()
+        break   # Exit the main loop
 
     else:
         # Display an error message for invalid main menu options

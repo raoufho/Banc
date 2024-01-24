@@ -4,11 +4,11 @@ class Bank:
     
     def __init__(self):
         # Initialize an empty dictionary to store account information
-        # The dictionary contain the name and the account number as information
+        # The dictionary contain the account number, the name and the balance as information
         self._accounts = {}
 
-    def account_number_generator(self):
-# we use while because we can randomly fall in the same account number and we need to re use the random
+    def _account_number_generator(self):
+    # we use while because we can randomly fall in the same account number and we need to reuse the random
         while True:
             # Generate a random 5-digit account number with leading zeros
             account_number = str(random.randint(1,99999)).zfill(5)
@@ -16,28 +16,25 @@ class Bank:
             if account_number not in self._accounts:
                 return account_number
 
-    def creataccount(self, name, initial_deposit):
-        # Check if the user name lenght is more than three characters
-        if len(name) > 3 :
-            # Check if initial deposit is between 0 and 5000 
-            if 10 <= initial_deposit < 5000 :
-                # Check if a user with the same name already exists
-                for account_number, account_info in self._accounts.items():
-                    if account_info['name'] == name:
-                        print(f"Error: Account creation failed. A user with the name '{name}' already exists.")
-                        return
-                # Create a new account with a random account number
-                account_number = self.account_number_generator()
-                # Store account information in the dictionary
-                self._accounts[account_number] = {"name": name, "balance": initial_deposit}
-                # Display a success message with the account number
-                print(f"Account created successfully. Your account number is: {account_number}")
-            else:
-                print("Error: Initial deposit must be between $10 and $5000.")
+    def creat_account(self, name, initial_deposit):
+        # Check if the user name lenght is more than three characters and initial deposit is between 0 and 5000 
+        if len(name) > 3 and 10 <= initial_deposit < 5000:
+            # Check if a user with the same name already exists
+            for account_number, account_info in self._accounts.items():
+                if account_info['name'] == name:
+                    print(f"Error: Account creation failed. A user with the name '{name}' already exists.")
+                    return
+            # Create a new account with a random account number
+            account_number = self._account_number_generator()
+            # Store account information in the dictionary
+            self._accounts[account_number] = {"name": name, "balance": initial_deposit}
+            # Display a success message with the account number
+            print(f"Account created successfully. Your account number is: {account_number}")
         else:
-            print("Error: User name must be more than 3 characters.")
+            print("Error: Invalid user name or initial deposit amount.")
+    
 
-    def check_valid_user(self, name, account_number):
+    def _check_valid_user(self, name, account_number):
     # Check if the provided account number and name match an existing account
         if account_number in self._accounts and self._accounts[account_number]['name'] == name:
             return True     # Return True if the account is valid
@@ -84,7 +81,7 @@ class Bank:
         print("Available balance: ${:.2f}".format(self._accounts[account_number]['balance']))
 
 class Menu:
-    # Initialize the bank
+
     def __init__(self):
         self._bank = Bank()
 
@@ -103,14 +100,14 @@ class Menu:
                 # Option to create a new account
                 name = input("Enter your name: ")
                 initial_deposit = float(input("Enter your initial deposit amount: "))
-                self._bank.creataccount(name, initial_deposit)
+                self._bank.creat_account(name, initial_deposit)
 
             elif choice == "2":
                 # Option to access an existing account
                 name = input("Enter your name: ")
                 account_number = input("Enter your account number: ")
                 
-                if self._bank.check_valid_user(name, account_number):
+                if self._bank._check_valid_user(name, account_number):
 
                 # Access granted, show additional options for the account
                     while True:
@@ -165,6 +162,7 @@ class Menu:
                 # Display an error message for invalid main menu options
                 print("Invalid option, Please enter a valid option (1, 2, or 3)")
 
+# Initialize and start the banking system
 menu = Menu()
 menu.start()
 

@@ -1,5 +1,12 @@
 import random
 
+class Account:
+
+    def __init__(self, name, initial_deposit):
+        self.name = name
+        self.balance = initial_deposit
+
+
 class Bank:
     
     def __init__(self):
@@ -26,8 +33,9 @@ class Bank:
                     return
             # Create a new account with a random account number
             account_number = self._account_number_generator()
+            new_account = Account(name, initial_deposit)
             # Store account information in the dictionary
-            self._accounts[account_number] = {"name": name, "balance": initial_deposit}
+            self._accounts[account_number] = new_account
             # Display a success message with the account number
             print(f"Account created successfully. Your account number is: {account_number}")
         else:
@@ -36,7 +44,7 @@ class Bank:
 
     def _check_valid_user(self, name, account_number):
     # Check if the provided account number and name match an existing account
-        if account_number in self._accounts and self._accounts[account_number]['name'] == name:
+        if account_number in self._accounts and self._accounts[account_number].name == name:
             return True     # Return True if the account is valid
         else:
             return False    # Return False if the account is not valid
@@ -46,10 +54,10 @@ class Bank:
             # Convert the withdrawal amount to a float
             amount = float(amount)
             # Check if there are sufficient funds for the withdrawal and amount is positive
-            if 0 < amount < self._accounts[account_number]['balance']:
+            if 0 < amount < self._accounts[account_number].balance:
                 # Perform the withdrawal and display the updated balance
-                self._accounts[account_number]['balance'] -= amount
-                print(f"Withdrawal successful. Available balance: ${self._accounts[account_number]['balance']:.2f}")
+                self._accounts[account_number].balance -= amount
+                print(f"Withdrawal successful. Available balance: ${self._accounts[account_number].balance:.2f}")
             else:
                 # Display an error message for insufficient funds
                 print("Insufficient funds. Withdrawal failed.")
@@ -65,8 +73,8 @@ class Bank:
             # Check if the amount is positif and less than 10k
             if 0 < amount < 10000 :
                 # Perform the deposit and display the updated balance
-                self._accounts[account_number]['balance'] += amount
-                print(f"Deposit successful. Available balance: ${self._accounts[account_number]['balance']:.2f}")
+                self._accounts[account_number].balance += amount
+                print(f"Deposit successful. Available balance: ${self._accounts[account_number].balance :.2f}")
             else:
                 # Message error for deposit
                 print("Deposit failed. Amount should be less than $10000")
@@ -78,7 +86,7 @@ class Bank:
 
     def display(self, account_number):
         # Display the available balance for the specified account
-        print("Available balance: ${:.2f}".format(self._accounts[account_number]['balance']))
+        print("Available balance: ${:.2f}".format(self._accounts[account_number].balance))
 
 class Menu:
 

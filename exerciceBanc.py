@@ -6,7 +6,6 @@ class Account:
         self.name = name
         self.balance = initial_deposit
 
-
 class Bank:
     
     def __init__(self):
@@ -28,7 +27,8 @@ class Bank:
         if len(name) > 3 and 10 <= initial_deposit < 5000:
             # Check if a user with the same name already exists
             for account_number, account_info in self._accounts.items():
-                if account_info['name'] == name:
+                if account_info.name == name:
+                # each account is represented as an instance of the Account class
                     print(f"Error: Account creation failed. A user with the name '{name}' already exists.")
                     return
             # Create a new account with a random account number
@@ -83,6 +83,28 @@ class Bank:
             print("Invalid input. Please enter a valid numeric value.")
         return
     
+    def transfer(self, account_number, account_transfer):
+        try:
+            # Check if the provided account number for transfer exists   
+            if account_transfer in self._accounts:
+                # Get the transfer amount from user input
+                amount = input("Enter the amount: ")
+                amount = float(amount)
+                # Check if the amount is positive and within the available balance
+                if 0 < amount <= self._accounts[account_number].balance:
+                    # Perform the transfer by deducting from the sender and adding to the receiver
+                    self._accounts[account_number].balance -= amount
+                    self._accounts[account_transfer].balance += amount
+                    print("Transfer successful.")
+                else:
+                    # Display an error message for invalid account number for transfer
+                    print("Insufficient funds. Transfer failed.")
+            else:
+                print("This account number doesn't exist")
+        
+        except ValueError:
+            print("Invalid input. Please enter a valid numeric value.")
+        return
 
     def display(self, account_number):
         # Display the available balance for the specified account
@@ -122,9 +144,10 @@ class Menu:
                         print("\nWhat would you like to do?")
                         print("1: Withdraw ")
                         print("2: Deposit")
-                        print("3: Display balance")
-                        print("4: Return to the main menu")
-                        print("5: Exit")
+                        print("3: Transfer amount")
+                        print("4: Display balance")
+                        print("5: Return to the main menu")
+                        print("6: Exit")
 
                         # Get user input for the account options
                         option = input("Enter the option number: ")  #int input doesn't work with string options "1"
@@ -140,22 +163,27 @@ class Menu:
                             self._bank.deposit(account_number, amount)
 
                         elif option == "3":
+                            # Option to transfer amount
+                            account_transfert = input("Enter the account number to which you want to make a transfer: ")
+                            self._bank.transfer(account_number, account_transfert)    
+
+                        elif option == "4":
                             # Option to display available balance
                             self._bank.display(account_number)
 
-                        elif option == "4":
+                        elif option == "5":
                             # Option to return to the main menu
                             print("Reterning to the main menu")
                             break
 
-                        elif option == "5":
+                        elif option == "6":
                             # Option to exit the program
                             print("Exiting the program. Thank you for using our service\n")
                             exit()
 
                         else:
                             # Display an error message for invalid options
-                            print("Invalid option. Please enter a valid option (1, 2, 3, or 4).\n")
+                            print("Invalid option. Please enter a valid option\n")
                     
                 else:
                     # Display an error message for invalid user or account
@@ -184,15 +212,10 @@ Project:
  And then you need to provide them options to withdraw, deposit or display their available balance if it is a valid user.
 
  Solution:
- self.accounts = 
- {
-    'account_number_1': {'name': 'account_name_1', 'balance': account_balance_1},
-    'account_number_2': {'name': 'account_name_2', 'balance': account_balance_2},
+ self._accounts = {
+    'account_number_1': Account('account_name_1', account_balance_1),
+    'account_number_2': Account('account_name_2', account_balance_2),
     # ... and so on
 }
 
- {      key      :    value    }
- {account_number : account_info}  
- account_info = {'name': 'account_name', 'balance': account_balance}
- 
  """

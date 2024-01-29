@@ -115,7 +115,8 @@ class Menu:
     def __init__(self):
         self._bank = Bank()
 
-    def start(self):
+    @staticmethod
+    def start():
         # Main loop for the banking system
         while True:
             print("\nWelcome to the Banking System!")

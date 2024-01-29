@@ -57,7 +57,7 @@ class Bank:
             if 0 < amount < self._accounts[account_number].balance:
                 # Perform the withdrawal and display the updated balance
                 self._accounts[account_number].balance -= amount
-                print(f"Withdrawal successful. Available balance: ${self._accounts[account_number].balance:.2f}")
+                print(f"Withdrawal successful. With amount: ${amount:.2f}")
             else:
                 # Display an error message for insufficient funds
                 print("Insufficient funds. Withdrawal failed.")
@@ -74,7 +74,7 @@ class Bank:
             if 0 < amount < 10000 :
                 # Perform the deposit and display the updated balance
                 self._accounts[account_number].balance += amount
-                print(f"Deposit successful. Available balance: ${self._accounts[account_number].balance :.2f}")
+                print(f"Deposit successful. With amount: ${amount :.2f}")
             else:
                 # Message error for deposit
                 print("Deposit failed. Amount should be less than $10000")
@@ -95,7 +95,7 @@ class Bank:
                     # Perform the transfer by deducting from the sender and adding to the receiver
                     self._accounts[account_number].balance -= amount
                     self._accounts[account_transfer].balance += amount
-                    print("Transfer successful.")
+                    print(f"Transfer successful. With amount: ${amount :.2f}")
                 else:
                     # Display an error message for invalid account number for transfer
                     print("Insufficient funds. Transfer failed.")
@@ -108,15 +108,14 @@ class Bank:
 
     def display(self, account_number):
         # Display the available balance for the specified account
-        print("Available balance: ${:.2f}".format(self._accounts[account_number].balance))
+        print(f"Available balance: ${self._accounts[account_number].balance :.2f}")
 
 class Menu:
 
     def __init__(self):
         self._bank = Bank()
 
-    @staticmethod
-    def start():
+    def start(self):
         # Main loop for the banking system
         while True:
             print("\nWelcome to the Banking System!")

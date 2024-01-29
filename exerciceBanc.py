@@ -86,7 +86,7 @@ class Bank:
     def transfer(self, account_number, account_transfer):
         try:
             # Check if the provided account number for transfer exists   
-            if account_transfer in self._accounts:
+            if account_transfer in self._accounts and account_transfer != account_number:
                 # Get the transfer amount from user input
                 amount = input("Enter the amount: ")
                 amount = float(amount)
